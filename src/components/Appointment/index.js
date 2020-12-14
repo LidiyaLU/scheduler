@@ -8,14 +8,14 @@ import Empty from "components/Appointment/Empty";
 export default function Appointment(props) {
 
   return (
-    <>
-      <article className="appointment"></article>
+    
+      <article className="appointment">
         <Header time={props.time}/>
           {props.interview ? <Show onEdit={props.onEdit}
             onDelete={props.onDelete}
             student={props.interview.student}
             interviewer={props.interview.interviewer}/> : <Empty onAdd={props.onAdd}/>}
       
-    </>
+      </article>
   )
 }
