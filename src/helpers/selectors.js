@@ -9,4 +9,23 @@ export function getAppointmentsForDay(state, day) {
   }
   return selectedDay.appointments.map(appointmentId=> state.appointments[appointmentId]);
 
+};
+
+export function getInterview(state,interview) {
+
+  let selectedInterview = {};
+
+  if (!interview) {
+    return null;
+  }
+
+  for (let intr in state.interviewers) {
+    if (state.interviewers[intr].id === interview.interviewer) {
+      selectedInterview = {
+        student: interview.student,
+        interviewer: state.interviewers[intr]
+      }
+    }
+  }
+  return selectedInterview;
 }
