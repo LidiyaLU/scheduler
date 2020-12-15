@@ -14,7 +14,7 @@ export default function Appointment(props) {
           {props.interview ? <Show onEdit={props.onEdit}
             onDelete={props.onDelete}
             student={props.interview.student}
-            interviewer={props.interview.interviewer}/> : <Empty onAdd={props.onAdd}/>}
+            interviewer={props.interviewers[props.interview.interviewer]}/> : <Empty onAdd={props.onAdd}/>}
       
       </article>
   )
