@@ -2,13 +2,25 @@ import React from "react";
 
 export function getAppointmentsForDay(state, day) {
 
-  
+  console.log("state", state);
+
   const selectedDay = state.days.find((currentDay) => currentDay.name === day);
 
   if(!selectedDay){
     return [];
   }
   return selectedDay.appointments.map(appointmentId => state.appointments[appointmentId]);
+
+};
+
+export function getInterviewersForDay(state, day) {
+
+  const selectedDay = state.days.find((currentDay) => currentDay.name === day);
+
+  if(!selectedDay){
+    return [];
+  }
+  return selectedDay.interviewers.map(interviewerId => state.interviewers[interviewerId]);
 
 };
 

@@ -2,13 +2,9 @@ import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 import axios from "axios";
 
-
-const urls = {
-  days: 'http://localhost:8001/api/days'
-}
 
 export default function Application(props) {
 
@@ -19,7 +15,7 @@ export default function Application(props) {
     appointments: {}
   });
 
-  // const setDay = day => setState({ ...state, state.day });
+  const setDay = day => setState({ ...state, day });
 
   useEffect(() => {
     Promise.all([
@@ -29,30 +25,33 @@ export default function Application(props) {
     ]).then((all) => {      
       setState(prev => ({
         ...prev, 
-        days:all[0].data, 
+        days: all[0].data, 
         appointments: all[1].data, 
         interviewers: all[2].data
       }));
     })  
   }, []);
 
-  console.log('Days', state.days);
+  //console.log('Days', state.days);
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   
 
 
   const appointmentsAll = dailyAppointments.map(appointment => {
+
     const interview = getInterview(state, appointment.interview);
+    const interviewers = getInterviewersForDay(state, state.day);
 
       return (
         <Appointment
+          {...appointment}  
           key={appointment.id}
           id={appointment.id}
           time={appointment.time}
           interview={interview}
-          interviewers={state.interviewers}
+          interviewers={interviewers}
           
-          {...appointment}       
+               
         />
       );
       })
@@ -70,7 +69,8 @@ export default function Application(props) {
                
                 days={state.days}
                 day={state.day}
-                setDay={setState}
+                setDay={setDay}
+                
               />
               </nav>
                 <img
