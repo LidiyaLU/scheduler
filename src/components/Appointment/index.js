@@ -16,6 +16,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERORR_DELETE = "ERROR_DELETE";
 
 
 export default function Appointment(props) {
@@ -34,19 +36,21 @@ export default function Appointment(props) {
     const interview = {
       student: name,
       interviewer
-      
+
     };
     console.log("safe function called!");
     transition(SAVING);
     props.bookInterview(props.id, interview)
-    .then(responce => transition(SHOW));
+    .then(responce => transition(SHOW))
+    .catch(() => transition(ERROR_SAVE));
   };
 
 
   function deletionAppointment() {
     transition(DELETING);
     props.cancelInterview(props.id)
-    .then(() => transition(EMPTY));
+    .then(() => transition(EMPTY))
+    .catch(() => transition(ERORR_DELETE));
   };
 
   function confirmDeletion() {
@@ -78,7 +82,7 @@ export default function Appointment(props) {
             <Status message = {"Saved"} />
           )}
           {mode === CONFIRM && (
-            <Confirm message = {"R U SURE?"}
+            <Confirm 
             onCancel={back}
             onConfirm={deletionAppointment}
             />
