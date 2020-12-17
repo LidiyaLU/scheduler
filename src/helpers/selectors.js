@@ -9,7 +9,7 @@ export function getAppointmentsForDay(state, day) {
   if(!selectedDay){
     return [];
   }
-  return selectedDay.appointments.map(appointmentId => state.appointments[appointmentId]);
+  return selectedDay.appointments.map(appointmentId => state.appointments[appointmentId])
 
 };
 
@@ -41,4 +41,11 @@ export function getInterview(state,interview) {
     }
   }
   return selectedInterview;
+};
+
+export function getSpotsForDay(state, dayName) {
+
+  const selectedDay = state.days.find((currentDay) => currentDay.name === dayName);
+
+return selectedDay.appointments.filter(appointmentId => state.appointments[appointmentId].interview === null).length;
 }

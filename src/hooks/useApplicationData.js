@@ -1,8 +1,9 @@
 import React, { useState , useEffect} from "react";
 import axios from 'axios';
+import {getSpotsForDay} from "helpers/selectors";
 
 export default function  useApplicationData() {
-
+  
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -23,11 +24,10 @@ export default function  useApplicationData() {
     });
   },[]);
 
-
   const setDay = day => setState({ ...state, day });
 
-  const bookInterview = (id, interview) =>  {
-
+  function bookInterview(id, interview) {
+      
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -37,17 +37,38 @@ export default function  useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+
+    const newState = {
+      ...state, appointments}
+   
+    const newSpot = getSpotsForDay(newState, state.day);
+
+    const currentDay = state.days.find((day) => day.appointments.includes(id));
+
+    const updatedDay = {
+      ...currentDay, 
+       spots: newSpot
+    };
+
+    const updatedDays = state.days.map((day) => {
+      if(day.id === currentDay.id) {
+        return updatedDay;
+      } else {
+        return day;
+      }
+    });
     
-    return axios.put(`/api/appointments/${id}`,{interview},)
+
+    return axios.put(`/api/appointments/${id}`,{interview})
     .then(response => {
-      setState((prev) => ( {...prev,appointments}))
+      setState((prev) => ( {...prev,appointments, days: updatedDays}))
     })
 
+  
   };
 
-  const cancelInterview = (id) => {
+  function cancelInterview(id) {
 
-   
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -57,18 +78,33 @@ export default function  useApplicationData() {
       ...state.appointments,
       id: appointment
     };
+
+    const newState = {
+      ...state, appointments}
+   
+    const newSpot = getSpotsForDay(newState, state.day);
+
+    const currentDay = state.days.find((day) => day.appointments.includes(id));
+
+    const updatedDay = {
+      ...currentDay, 
+       spots: newSpot
+    };
+
+    const updatedDays = state.days.map((day) => {
+      if(day.id === currentDay.id) {
+        return updatedDay;
+      } else {
+        return day;
+      }
+    });
    
       return axios.delete(`/api/appointments/${id}`)
-      .then(response => setState((prev) =>( {...prev, appointments})) )
-   
+      .then(() => 
+        setState((prev) => ({...prev, appointments, days: updatedDays})))
     
-
   };
-  // Get data from API and set the sate with the retrieved data
- 
 
-
-   //setting the day when user clicks 
   
    return {
     state,

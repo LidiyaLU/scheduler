@@ -40,7 +40,7 @@ export default function Appointment(props) {
 
     };
     //console.log("safe function called!");
-
+    console.log("hello!");
     transition(SAVING);
 
     props.bookInterview(props.id, interview)
