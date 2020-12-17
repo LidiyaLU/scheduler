@@ -42,6 +42,7 @@ export default function  useApplicationData() {
       ...state, appointments}
    
     const newSpot = getSpotsForDay(newState, state.day);
+    console.log("newSpot", newSpot);
 
     const currentDay = state.days.find((day) => day.appointments.includes(id));
 
@@ -76,13 +77,14 @@ export default function  useApplicationData() {
 
     const appointments = {
       ...state.appointments,
-      id: appointment
+      [id]: appointment
     };
 
     const newState = {
       ...state, appointments}
    
     const newSpot = getSpotsForDay(newState, state.day);
+    console.log("deletedSpots", newSpot);
 
     const currentDay = state.days.find((day) => day.appointments.includes(id));
 

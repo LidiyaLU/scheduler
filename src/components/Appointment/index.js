@@ -29,18 +29,16 @@ export default function Appointment(props) {
 
     props.interview ? SHOW : EMPTY
 
-    //.then(response => transition(SHOW))
   );
 
   function save(name, interviewer) {
-    // why we should call bookInterview here?
+    
     const interview = {
       student: name,
       interviewer
 
     };
-    //console.log("safe function called!");
-    console.log("hello!");
+   
     transition(SAVING);
 
     props.bookInterview(props.id, interview)
