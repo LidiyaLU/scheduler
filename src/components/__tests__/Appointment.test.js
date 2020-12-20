@@ -4,7 +4,6 @@ import { render, cleanup } from "@testing-library/react";
 
 import Application from "components/Application";
 
-
 /*
   We import the component that we are testing
 */
