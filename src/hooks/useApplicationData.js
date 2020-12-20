@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import {useState, useEffect} from "react";
 import axios from 'axios';
 import {getSpotsForDay} from "helpers/selectors";
 
@@ -26,6 +26,8 @@ export default function  useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
+//function which creates an appointment
+
   function bookInterview(id, interview) {
       
     const appointment = {
@@ -42,8 +44,7 @@ export default function  useApplicationData() {
       ...state, appointments}
    
     const newSpot = getSpotsForDay(newState, state.day);
-    console.log("newSpot", newSpot);
-
+  
     const currentDay = state.days.find((day) => day.appointments.includes(id));
 
     const updatedDay = {
@@ -68,6 +69,7 @@ export default function  useApplicationData() {
   
   };
 
+//function to cancel appointment
   function cancelInterview(id) {
 
     const appointment = {

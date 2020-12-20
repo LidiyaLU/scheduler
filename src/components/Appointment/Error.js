@@ -1,6 +1,5 @@
 import React from "react";
 import "components/Appointment/styles.scss"
-import Button from "components/Button"
 
 export default function Error(props) {
 

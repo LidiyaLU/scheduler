@@ -1,27 +1,26 @@
-import React from "react";
-
+//function returns appointments for selected day
 export function getAppointmentsForDay(state, day) {
-
-  console.log("state", state);
 
   const selectedDay = state.days.find((currentDay) => currentDay.name === day);
 
   if(!selectedDay){
     return [];
   }
-  return selectedDay.appointments.map(appointmentId => state.appointments[appointmentId])
+  return selectedDay.appointments.map((appointmentId) => state.appointments[appointmentId])
 
 };
 
+//function returns array of interviewers for selected day
 export function getInterviewersForDay(state, day) {
 
-  const selectedDay = state.days.find((currentDay) => currentDay.name === day);
+  const selectedDay = state.days.find((currentDay) => (currentDay.name === day));
 
   if(!selectedDay){
     return [];
-  }
-  return selectedDay.interviewers.map(interviewerId => state.interviewers[interviewerId]);
-
+  } 
+   
+  return selectedDay.interviewers.map((interviewerId) => state.interviewers[interviewerId]);
+  
 };
 
 export function getInterview(state,interview) {
@@ -43,9 +42,11 @@ export function getInterview(state,interview) {
   return selectedInterview;
 };
 
+
+//function returns remainin spots for selected day
 export function getSpotsForDay(state, dayName) {
 
   const selectedDay = state.days.find((currentDay) => currentDay.name === dayName);
-
-return selectedDay.appointments.filter(appointmentId => state.appointments[appointmentId].interview === null).length;
+ 
+  return selectedDay.appointments.filter(appointmentId => state.appointments[appointmentId].interview === null).length;
 }

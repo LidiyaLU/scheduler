@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
-import axios from "axios";
 import useApplicationData from "hooks/useApplicationData";
 
 export default function Application(props) {
@@ -15,14 +14,15 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
+//here we create appointments for selected day
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  console.log("daylyApps", dailyAppointments);
+
   const appointmentsAll = dailyAppointments.map(appointment => {
 
     const interview = getInterview(state, appointment.interview);
     const interviewers = getInterviewersForDay(state, state.day);
 
-      return (
+    return (
         <Appointment
           {...appointment}  
           key={appointment.id}
@@ -35,14 +35,12 @@ export default function Application(props) {
                
         />
       );
-      })
+  })
   
   return (
    
     <main className="layout">
       <section className="sidebar">
-        {
-           <React.Fragment>
              <img className="sidebar--centered" src="images/logo.png" alt="Interview Scheduler" />
               <hr className="sidebar__separator sidebar--centered" />
               <nav className="sidebar__menu">
@@ -58,10 +56,12 @@ export default function Application(props) {
                 className="sidebar__lhl sidebar--centered"
                 src="images/lhl.png"
                 alt="Lighthouse Labs"/>
-</React.Fragment>}
       </section>
       <section className="schedule">
         {appointmentsAll}
+        <Appointment 
+        key={"last"}
+        time={'5pm'}/>
       </section>
     </main>
   );
